@@ -1,0 +1,46 @@
+# cabbie 2.0 default
+# (C) 2007, Johannes Voggenthaler (Zinc Alloy)
+#derived from "cabbie" (C) Yohann Misquitta
+%wd
+%X|wpsbackdrop-320x240x16.bmp|
+%xl|A|lock-320x240x16.bmp|91|207|2|
+%xl|B|battery-320x240x16.bmp|126|207|10|
+%xl|C|volume-320x240x16.bmp|177|207|10|
+%xl|D|shuffle-320x240x16.bmp|218|211|
+%xl|E|repeat-320x240x16.bmp|261|207|4|
+%xl|F|playmode-320x240x16.bmp|286|207|5|
+%ax%Cl|16|32|s120|s120|
+%pb|pb-320x240x16.bmp|10|162|300|15|
+%?mh<%xdAa|%xdAb>
+%?bp<%?bc<%xdBa|%xdBb>|%?bl<|%xdBc|%xdBd|%xdBe|%xdBf|%xdBg|%xdBh|%xdBi|%xdBj>>
+%?pv<%xdCa|%xdCb|%xdCc|%xdCd|%xdCe|%xdCf|%xdCg|%xdCh|%xdCi|%xdCj>
+%?ps<%xdD>
+%?mm<|%xdEa|%xdEb|%xdEc|%xdEd>
+%?mp<%xdFa|%xdFb|%xdFc|%xdFd|%xdFe>
+
+%?C<%Vda%C|%Vdb>
+#NowPlaying
+
+%ax%Vl|a|153|30|-|130|1|-|-|
+%s%al%?it<%it|%fn>
+%s%al%?ia<%ia|%?d2<%d2|(root)>>
+%s%al%?id<%id|%?d1<%d1|(root)>>
+%s%al%iy
+
+%s%al%Sx|Next Track:|
+%s%al%?It<%It|%Fn>
+%s%al%Ia
+
+%ax%Vl|b|0|30|-|130|1|-|-|
+%s%ac%?it<%it|%fn>
+%s%ac%?ia<%ia|%?d2<%d2|(root)>>
+%s%ac%?id<%id|%?d1<%d1|(root)>>
+%s%ac%iy
+
+%ac%Sx|Next Track:|
+%s%ac%?It<%It|%Fn>
+%s%ac%Ia
+
+%V|10|180|300|20|1|-|-|
+%al%pc%ac%?Sr<%pe %Sx|of| %pp|%pp %Sx|of| %pe>%ar%pr
+

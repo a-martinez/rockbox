@@ -1,0 +1,26 @@
+%x|a|background_r.bmp|0|0|
+%xl|A|codec.bmp|8|46|22|
+%xl|B|encoding.bmp|9|52|2|
+%xl|C|repeat.bmp|41|1|4|
+%xl|D|playmode_r.bmp|6|12|5|
+%xl|E|shuffle.bmp|26|1|
+%xl|F|lock_main.bmp|73|0|
+%xl|G|lock_remote.bmp|81|0|
+%xl|H|volume_r.bmp|0|0|10|
+%xl|I|battery.bmp|112|0|6|
+%wd
+
+
+
+%s%ac%?it<%it|%fn>
+%s%ac%?ia<%ia|%d2>
+%ar%pc/%pt %?fc<%xdAa|%xdAb|%xdAc|%xdAd|%xdAe|%xdAf|%xdAg|%xdAh|%xdAi|%xdAj|%xdAk|%xdAl|%xdAm|%xdAn|%xdAo|%xdAp|%xdAq|%xdAr|%xdAs|%xdAt|%xdAu|%xdAv>
+        %fbk
+%?fv<%xdBa|%xdBb>
+%?pv<%xdHa|%xdHb|%xdHc|%xdHd|%xdHe|%xdHf|%xdHg|%xdHh|%xdHi|%xdHj>
+%t0.2%?bp<%xdIa|%?bl<%xdIb|%xdIc|%xdId|%xdIe|%xdIf>>;%t0.2%?bp<%xdIa|%?bl<|%xdIc|%xdId|%xdIe|%xdIf>>;%t0.2%?bp<%xdIa|%?bl<%xdIb||%xdId|%xdIe|%xdIf>>;%t0.2%?bp<%xdIa|%?bl<||%xdId|%xdIe|%xdIf>>
+%?mm<|%xdCa|%xdCb|%xdCc|%xdCd>
+%?mp<%xdDa|%xdDb|%xdDc|%xdDd|%xdDe>
+%?ps<%xdE|>
+%?mh<%xdF|>
+%?mr<%xdG|>

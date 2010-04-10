@@ -1,0 +1,14 @@
+%x|a|bg-r.bmp|0|0|
+%xl|A|playmode.bmp|59|0|5|
+%xl|B|repeat.bmp|114|0|4|
+%xl|C|Shf.bmp|101|0|
+%xl|D|Pow.bmp|5|53|
+%xl|E|battery.bmp|0|53|5|
+%xl|F|HoldM.bmp|36|0|
+%xl|G|HoldR.bmp|47|0|
+%wd
+%al   %pv%?mh<%xdF|>%?mr<%xdG|>%ac%?mp<%xdAa|%xdAb|%xdAc|%xdAd|%xdAe>%?mm<|%xdBa|%xdBb|%xdBc|%xdBd>%?ps<%xdC|>
+%ac%s%?in<%in. |>%?it<%it|%fn>
+%t3%ac%s%?ia<%ia|%d2>;%t3%ac%s%?id<%id|%d1>
+%pb
+%?bp<%xdD|%?bl<%xdEa|%xdEb|%xdEc|%xdEd|%xdEe>>     %bl%%%ar%pc/%pt

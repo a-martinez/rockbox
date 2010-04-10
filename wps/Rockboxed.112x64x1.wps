@@ -1,0 +1,23 @@
+# (C) 2007, Roan Horning <roan@horning.us>
+# License: GNU GPL v2 or later.
+%x|a|bg-mono-small.bmp|42|49|
+%wd
+%xl|A|mode-mono-small.bmp|57|49|5|
+%xl|B|shuffle-mono-small.bmp|29|49|2|
+%xl|C|volume-mono-small.bmp|0|49|10|
+%xl|D|battery-mono-small.bmp|93|49|11|
+%xl|E|repeat-mono-small.bmp|43|49|5|
+%xl|F|lock-mono-small.bmp|70|49|2|
+%al%s%ac%?ia<%ia|%d2>%ar
+%al%s%ac%?id<%id|%d1>%ar
+%al%s%ac%?it<%it|%fn>%ar
+%ac%t3%ig;%ac%iy
+%pb|-|10|-|92|5|
+%al %pc%ac%?fc<mp1|mp2|mp3|aiff|wav|unknown>%ar%pt 
+%?ps<%xdBa|%xdBb>
+%?mp<%xdAa|%xdAb|%xdAc|%xdAd|%xdAe>
+%?mm<%xdEa|%xdEb|%xdEc|%xdEd|%xdEe>
+%?mh<%xdFa|%xdFb>
+%?pv<%xdCa|%xdCb|%xdCc|%xdCd|%xdCe|%xdCf|%xdCg|%xdCh|%xdCi|%xdCj>
+%?bl<%xdDa|%xdDb|%xdDc|%xdDd|%xdDe|%xdDf|%xdDg|%xdDh|%xdDi|%xdDj|%xdDk>
+

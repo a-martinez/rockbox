@@ -1,0 +1,42 @@
+# cabbie 2.0 default
+# 160*128 greyscale port by Mark Fawcus (yapper)
+# works with 64*64 album art if present
+# (C) 2007, Johannes Voggenthaler (Zinc Alloy)
+# derived from "cabbie" (C) Yohann Misquitta
+%wd
+%X|wpsbackdrop-160x128x2.bmp|
+%xl|A|lock-160x128x2.bmp|48|114|2|
+%xl|B|battery-160x128x2.bmp|66|115|10|
+%xl|C|volume-160x128x2.bmp|87|114|10|
+%xl|D|shuffle-160x128x2.bmp|107|115|
+%xl|E|repeat-160x128x2.bmp|127|113|4|
+%xl|F|playmode-160x128x2.bmp|145|114|5|
+%ax%Cl|2|16|s64|s64|
+%pb|pb-160x128x2.bmp|1|86|158|8|
+%?mh<%xdAa|%xdAb>
+%?bp<%?bc<%xdBa|%xdBb>|%?bl<|%xdBc|%xdBd|%xdBe|%xdBf|%xdBg|%xdBh|%xdBi|%xdBj>>
+%?pv<%xdCa|%xdCb|%xdCc|%xdCd|%xdCe|%xdCf|%xdCg|%xdCh|%xdCi|%xdCj>
+%?ps<%xdD>
+%?mm<|%xdEa|%xdEb|%xdEc|%xdEd>
+%?mp<%xdFa|%xdFb|%xdFc|%xdFd|%xdFe>
+%?C<%C%Vda|%Vdb>
+
+%ax%Vl|a|70|10|-|75|1|-|-|
+%s%al%?it<%it|%fn>
+%s%al%?ia<%ia|%?d2<%d2|(root)>>
+%s%al%?id<%id|%?d1<%d1|(root)>>
+
+%s%al%Sx|Next Track:|
+%s%al%?It<%It|%Fn>
+
+%Vl|b|0|10|-|75|1|-|-|
+%s%ac%?it<%it|%fn>
+%s%ac%?ia<%ia|%?d2<%d2|(root)>>
+%s%ac%?id<%id|%?d1<%d1|(root)>>
+
+%s%ac%Sx|Next Track:|
+%s%ac%?It<%It|%Fn>
+
+%V|1|96|158|10|1|-|-|
+%al%pc%ac%?Sr<%pe %Sx|of| %pp|%pp %Sx|of| %pe>%ar%pr
+

@@ -1,0 +1,37 @@
+%x|a|bg-160x128.bmp|0|0|
+%xl|A|codec.bmp|40|70|22|
+%xl|B|encoding.bmp|40|76|2|
+%xl|C|repeat.bmp|99|0|4|
+%xl|D|navi.bmp|68|3|5|
+%xl|E|shf.bmp|99|17|
+%xl|F|lock-m.bmp|87|0|
+%xl|G|lock-r.bmp|87|12|
+%xl|H|volume.bmp|12|1|11|
+%xl|I|battery.bmp|149|1|6|
+%xl|J|rating.bmp|91|68|11|
+%wd
+
+
+
+
+%ac%s%?it<%it|%fn>
+%ac%t5%s%?ia<%ia|%?d2<%d2|(Unknown Artist)>>;%ac%t5%s%?id<%id|%?d1<%d1|(Unknown Album)>>
+
+%ac%t5%pc / %pt;%ac%t5Track %?Sr<%pe %Sx|of| %pp|%pp %Sx|of| %pe>
+
+ %fbk
+
+%pb
+
+
+%ac%t5%s%?It<%It|%Fn>;%ac%t5%s%?Ia<%Ia|%D2>
+%?pv<%xdHa|%xdHb|%xdHc|%xdHd|%xdHe|%xdHf|%xdHg|%xdHh|%xdHi|%xdHj|%xdHk>
+%?bp<%xdIa|%?bl<%xdIb|%xdIc|%xdId|%xdIe|%xdIf>>
+%?fc<%xdAa|%xdAb|%xdAc|%xdAd|%xdAe|%xdAf|%xdAg|%xdAh|%xdAi|%xdAj|%xdAk|%xdAl|%xdAm|%xdAn|%xdAo|%xdAp|%xdAq|%xdAr|%xdAs|%xdAt|%xdAu|%xdAv>
+%?fv<%xdBa|%xdBb>
+%?mm<|%xdCa|%xdCb|%xdCc|%xdCd>
+%?mp<%xdDa|%xdDb|%xdDc|%xdDd|%xdDe>
+%?ps<%xdE|>
+%?mh<%xdF|>
+%?mr<%xdG|>
+%?rr<%xdJa|%xdJb|%xdJc|%xdJd|%xdJe|%xdJf|%xdJg|%xdJh|%xdJi|%xdJj|%xdJk>

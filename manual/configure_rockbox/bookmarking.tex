@@ -1,0 +1,103 @@
+% $Id$ %
+\section{\label{ref:Bookmarkconfigactual}Bookmarking}
+  Bookmarks allow you to save your current position within a track so that 
+  you can return to it at a later time. Bookmarks are saved on a per directory
+  basis or for individual (saved) playlists.
+  They are stored next to the directory/playlist they reference.
+  You can store multiple bookmarks for the same track.\\*
+  
+  \note{Bookmarking only works when tracks are launched from the file browser,
+        and does not currently work for tracks launched via the
+        database. In addition, they do not currently work with dynamic
+        playlists.\\*}
+
+  \begin{description}
+  \item [Bookmark on Stop.] This option controls whether Rockbox writes a
+    bookmark to the disk when playback is stopped. Setting this to
+    \setting{No} turns automatic bookmarking completely off. In contrast
+    \setting{Yes} turns automatic bookmarking on while \setting{Ask} 
+    asks on stopping the track if a bookmark should be created.
+    With the above options \setting{Yes} and \setting{Ask} if there is an existing 
+    \fname{.bmark} file the current position information will be added to the
+    front of the existing list, up to the maximum number of allowed bookmarks
+    per file (currently 10). If no \fname{.bmark} file exists, one will be
+    created with the new bookmark information. Finally, if the 
+    \setting{Maintain a list of Recently Used Bookmarks}
+     option is enabled, the bookmarking
+    information will be added to recent bookmarks list.
+    \begin{description}    
+      \item[Yes -- Recent Only.]
+            Turns on automatic bookmarking -- One bookmark only
+      \item[Ask -- Recent Only.]
+            Asks if a bookmark should be created when stopping track -- 
+            One bookmark only
+    \end{description}
+    With the two \setting{Recent Only} options, nothing is written to the 
+    \fname{.bmark} file. If the \setting{Maintain a list of Recently Used Bookmarks}
+    option is enabled, the bookmarking information will however be added to
+    recent bookmarks list. 
+    \note{The \setting{Resume} function remembers your position in the most
+      recently accessed track regardless of how the \setting{Bookmark on Stop}
+      option is set.}
+    
+  \item [Load Last Bookmark.]
+
+  When the \setting{Load Last Bookmark} option is set to \setting{Yes}, Rockbox
+  automatically returns to the position of the last bookmark within a file
+  when that file is played. 
+
+  When the \setting{Load Last Bookmark} option is set to \setting{Ask}, Rockbox will
+  give the user the option of starting from the beginning of the track
+  of or from the bookmark. 
+
+  When the \setting{Load Last Bookmark} option is set to \setting{No}, playback always
+  starts from the beginning of the track, and the user must play the bookmark
+  or use the \setting{Load Bookmark} function in the Main Menu, while the file
+  is playing, to resume at the bookmarked location.
+    
+  \item [Maintain a list of Recently Used Bookmarks.]
+
+  This list of Most Recent Bookmarks (MRB's) may be accessed through the
+  \setting{Recent Bookmarks} option of the \setting{Bookmarks} sub menu of the 
+  Main Menu. When set to \setting{Yes} each new bookmark will be added to the
+  MRB list. Setting this to \setting{No} disables the addition of bookmarks to
+  the MRB list. \setting{Unique Only} behaves like the \setting{Yes} setting 
+  but in addition all older entries for the current (dynamic) playlist will 
+  be removed from the MRB whenever a new entry is added.
+  
+  \item [Bookmark list keys.] The following keys can be used to navigate in
+  any bookmark list.\\
+\begin{table}
+    \begin{btnmap}{}{}
+      \ActionStdNext
+      \opt{HAVEREMOTEKEYMAP}{& \ActionRCStdNext}
+      & Selects the next bookmark.\\
+      %
+      \ActionStdPrev
+      \opt{HAVEREMOTEKEYMAP}{& \ActionRCStdPrev}
+      & Selects the previous bookmark.\\
+      %
+      \ActionStdOk
+      \opt{HAVEREMOTEKEYMAP}{& \ActionRCStdOk}
+      & Resumes from the selected bookmark.\\
+      %
+      \ActionStdCancel
+      \opt{HAVEREMOTEKEYMAP}{& \ActionRCStdCancel}
+      & Exits Recent Bookmark menu\\
+      %
+      \nopt{GIGABEAT_S_PAD}{\ActionBmDelete
+      \opt{HAVEREMOTEKEYMAP}{& \ActionRCBmDelete}
+      & Deletes the currently selected bookmark\\}
+      %
+      \ActionStdContext
+      \opt{HAVEREMOTEKEYMAP}{& \ActionRCStdContext}
+      & Enters the context menu for the selected bookmark.\\
+    \end{btnmap}
+\end{table}
+
+There are two options in the context menu:\\*
+  
+  \setting{Resume} will commence playback of the currently selected bookmark entry.
+  
+  \setting{Delete} will remove the currently selected bookmark entry from the list.
+\end{description}
