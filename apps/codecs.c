@@ -34,7 +34,6 @@
 #include "sprintf.h"
 #include "screens.h"
 #include "misc.h"
-#include "mas.h"
 #include "codecs.h"
 #include "lang.h"
 #include "keyboard.h"

@@ -50,7 +50,6 @@
 #endif
 #ifdef HAVE_RECORDING
 #include "peakmeter.h"
-#include "mas.h"
 #endif
 #include "splash.h"
 #if CONFIG_CODEC == SWCODEC

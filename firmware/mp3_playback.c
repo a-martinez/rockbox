@@ -30,10 +30,8 @@
 #include "sound.h"
 #ifndef SIMULATOR
 #include "i2c.h"
-#include "mas.h"
-#include "dac.h"
 #include "system.h"
-#endif
+#endif /* !SIMULATOR */
 #include "audiohw.h"
 
 /* hacking into mpeg.c, recording is still there */

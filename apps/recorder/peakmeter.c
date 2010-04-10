@@ -22,7 +22,7 @@
 #include <stdlib.h> /* sim uses rand for peakmeter simulation */
 #endif
 #include "config.h"
-#include "mas.h"
+#include "mas35xx.h"
 #include "thread.h"
 #include "kernel.h"
 #include "settings.h"

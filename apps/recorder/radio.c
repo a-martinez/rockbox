@@ -24,7 +24,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "sprintf.h"
-#include "mas.h"
 #include "settings.h"
 #include "button.h"
 #include "status.h"
