@@ -202,10 +202,10 @@ static void set_prescaled_volume(void)
 
 /* The WM codecs listed don't have suitable prescaler functionality, so we let
  * the prescaler stay at 0 for these unless SW tone controls are in use */
-#if defined(HAVE_SW_TONE_CONTROLS) || !(defined(HAVE_WM8975) \
+#if defined(HAVE_SW_TONE_CONTROLS) || !(defined(HAVE_WM8975)) \
     || defined(HAVE_WM8711) || defined(HAVE_WM8721) || defined(HAVE_WM8731) \
-    || defined(HAVE_WM8751) || defined(HAVE_WM8758) || defined(HAVE_WM8985)) \
-    || defined(HAVE_TSC2100) || defined(HAVE_UDA1341)
+    || defined(HAVE_WM8750) || defined(HAVE_WM8751) || defined(HAVE_WM8758) \
+    || defined(HAVE_WM8985) || defined(HAVE_TSC2100) || defined(HAVE_UDA1341)
 
     prescale = MAX(current_bass, current_treble);
     if (prescale < 0)
@@ -249,11 +249,12 @@ static void set_prescaled_volume(void)
     dac_volume(tenthdb2reg(l), tenthdb2reg(r), false);
 #elif defined(HAVE_UDA1380) || defined(HAVE_WM8975) || defined(HAVE_WM8758) \
    || defined(HAVE_WM8711) || defined(HAVE_WM8721) || defined(HAVE_WM8731) \
-   || defined(HAVE_WM8751) || defined(HAVE_AS3514) || defined(HAVE_TSC2100) \
-   || defined(HAVE_AK4537) || defined(HAVE_UDA1341)
+   || defined(HAVE_WM8750) || defined(HAVE_WM8751) || defined(HAVE_AS3514) \
+   || defined(HAVE_TSC2100) || defined(HAVE_AK4537) || defined(HAVE_UDA1341)
     audiohw_set_master_vol(tenthdb2master(l), tenthdb2master(r));
 #if defined(HAVE_WM8975) || defined(HAVE_WM8758) \
-    || (defined(HAVE_WM8751) && !defined(MROBE_100)) || defined(HAVE_WM8985)
+    || defined(HAVE_WM8750) || (defined(HAVE_WM8751) && !defined(MROBE_100)) \
+    || defined(HAVE_WM8985)
     audiohw_set_lineout_vol(tenthdb2master(0), tenthdb2master(0));
 #endif
 
@@ -309,7 +310,7 @@ void sound_set_bass(int value)
         return;
 
 #if !defined(AUDIOHW_HAVE_CLIPPING)
-#if defined(HAVE_WM8751)
+#if defined(HAVE_WM8750) || defined(HAVE_WM8751)
     current_bass = value;
 #else
     current_bass =  value * 10;
@@ -333,7 +334,7 @@ void sound_set_treble(int value)
         return;
 
 #if !defined(AUDIOHW_HAVE_CLIPPING)
-#if defined(HAVE_WM8751)
+#if defined(HAVE_WM8750) || defined(HAVE_WM8751)
     current_treble = value;
 #else
     current_treble = value * 10;

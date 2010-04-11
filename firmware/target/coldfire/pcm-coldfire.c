@@ -55,6 +55,24 @@
 
 #define FPARM_CLOCKSEL       0
 #define FPARM_CLSEL          1
+
+/* SCLK = Fs * bit clocks per word
+ * so SCLK should be Fs * 64
+ *
+ * CLOCKSEL sets SCLK freq based on Audio CLK
+ * 0x0c SCLK = Audio CLK/2   88200 * 64 = 5644800 Hz
+ * 0x06 SCLK = Audio CLK/4   44100 * 64 = 2822400 Hz
+ * 0x04 SCLK = Audio CLK/8   22050 * 64 = 1411200 Hz
+ * 0x02 SCLK = Audio CLK/16  11025 * 64 = 705600 Hz
+ *
+ * CLSEL sets MCLK1/2 DAC freq based on XTAL freq
+ * 0x01 MCLK1/2 = XTAL freq
+ * 0x02 MCLK1/2 = XTAL/2 freq
+ *
+ * Audio CLK can be XTAL freq or XTAL/2 freq  (bit22 in PLLCR)
+ * we always set bit22 so Audio CLK is always XTAL freq
+ */
+
 #if CONFIG_CPU == MCF5249 && defined(HAVE_UDA1380)
 static const unsigned char pcm_freq_parms[HW_NUM_FREQ][2] =
 {
@@ -62,6 +80,16 @@ static const unsigned char pcm_freq_parms[HW_NUM_FREQ][2] =
     [HW_FREQ_44] = { 0x06, 0x01 },
     [HW_FREQ_22] = { 0x04, 0x02 },
     [HW_FREQ_11] = { 0x02, 0x02 },
+};
+#endif
+
+#if CONFIG_CPU == MCF5249 && defined(HAVE_WM8750)
+static const unsigned char pcm_freq_parms[HW_NUM_FREQ][2] =
+{
+    [HW_FREQ_88] = { 0x0c, 0x01 },
+    [HW_FREQ_44] = { 0x06, 0x01 },
+    [HW_FREQ_22] = { 0x04, 0x01 },
+    [HW_FREQ_11] = { 0x02, 0x01 },
 };
 #endif
 
@@ -154,12 +182,20 @@ void pcm_play_dma_init(void)
        other settings. */
     or_l(IIS_FIFO_RESET, &IIS_PLAY);
     IIS_PLAY = IIS_PLAY_DEFPARM | IIS_FIFO_RESET;
+
+#if INPUT_SRC_CAPS != 0
     audio_set_output_source(AUDIO_SRC_PLAYBACK);
+#else
+    /* TXSOURCE = PDOR3 */
+    IIS_PLAY = ((IIS_PLAY & ~(7 << 8)) | (3<<8));
+#endif
 
     /* Initialize default register values. */
     audiohw_init();
 
+#if INPUT_SRC_CAPS != 0
     audio_input_mux(AUDIO_SRC_PLAYBACK, SRCF_PLAYBACK);
+#endif
 
     audiohw_set_frequency(pcm_fsel);
     coldfire_set_pllcr_audio_bits(PLLCR_SET_AUDIO_BITS_DEFPARM);
@@ -324,6 +360,7 @@ const void * pcm_play_dma_get_peak_buffer(int *count)
     return (void *)((addr + 2) & ~3);
 } /* pcm_play_dma_get_peak_buffer */
 
+#ifdef HAVE_RECORDING
 /****************************************************************************
  ** Recording DMA transfer
  **/
@@ -487,3 +524,4 @@ const void * pcm_rec_dma_get_peak_buffer(int *count)
     *count = (end >> 2) - addr;
     return (void *)(addr << 2);
 } /* pcm_rec_dma_get_peak_buffer */
+#endif
