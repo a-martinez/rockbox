@@ -425,6 +425,9 @@ copy_write_sectors:
     move.w  (%a0)+, %d2
     move.l  %d2, %d3
     lsr.l   #8, %d3
+
+/* low word of %d3 has to be byte swaped */
+
     move.w  %d3, (%a2)
         
 .w_end_u_w1:
@@ -440,6 +443,9 @@ copy_write_sectors:
     lsl.l   %d1, %d2
     lsr.l   #8, %d3
     or.l    %d3, %d2
+
+/* byte swap d2 */
+
     swap    %d2
     move.w  %d2, (%a2)
     swap    %d2
@@ -458,6 +464,9 @@ copy_write_sectors:
     lsl.l   %d1, %d2
     lsr.l   #8, %d0
     or.l    %d0, %d2
+
+/* byte swap d2 */
+
     swap    %d2
     move.w  %d2, (%a2)
     swap    %d2
@@ -466,6 +475,9 @@ copy_write_sectors:
     lsl.l   %d1, %d3
     lsr.l   #8, %d0
     or.l    %d0, %d3
+
+/* byte swap d3 */
+
     swap    %d3
     move.w  %d3, (%a2)
     swap    %d3
@@ -474,6 +486,9 @@ copy_write_sectors:
     lsl.l   %d1, %d4
     lsr.l   #8, %d0
     or.l    %d0, %d4
+
+/* byte swap d4 */
+
     swap    %d4
     move.w  %d4, (%a2)
     swap    %d4
@@ -482,6 +497,9 @@ copy_write_sectors:
     lsl.l   %d1, %d5
     lsr.l   #8, %d0
     or.l    %d0, %d5
+
+/* byte swap d5 */
+
     swap    %d5
     move.w  %d5, (%a2)
     swap    %d5
@@ -500,6 +518,9 @@ copy_write_sectors:
     lsl.l   %d1, %d2
     lsr.l   #8, %d3
     or.l    %d3, %d2
+
+/* byte swap d2 */
+
     swap    %d2
     move.w  %d2, (%a2)
     swap    %d2
@@ -515,6 +536,9 @@ copy_write_sectors:
 
     swap    %d2
     move.w  (%a0)+, %d2
+
+/* byte swap d2 */
+
     move.l  %d2, %d3
     lsr.l   #8, %d3
     move.w  %d3, (%a2)
@@ -522,6 +546,9 @@ copy_write_sectors:
 .w_end_u_w2:
     lsl.l   #8, %d2
     move.b  (%a0)+, %d2
+
+/* byte swap low word of d2 ??? */
+
     move.w  %d2, (%a2)
     bra.b    .w_exit
 
@@ -530,6 +557,7 @@ copy_write_sectors:
     btst.l  #1, %d0
     beq.b   .w_end_a_w1
 
+/* this has to be byte swaped */
     move.w  (%a0)+, (%a2)   /* copy initial word */
 
 .w_end_a_w1:
@@ -541,6 +569,9 @@ copy_write_sectors:
 
 .w_loop_a_l1:
     move.l  (%a0)+, %d1
+
+/* byte swap d1 */
+
     swap    %d1
     move.w  %d1, (%a2)
     swap    %d1
@@ -553,6 +584,9 @@ copy_write_sectors:
 
 .w_loop_a_line:
     movem.l (%a0), %d0-%d3
+
+/* byte swap d0-d3 */
+
     lea.l   (16, %a0), %a0
     swap    %d0
     move.w  %d0, (%a2)
@@ -579,6 +613,9 @@ copy_write_sectors:
 
 .w_loop_a_l2:
     move.l  (%a0)+, %d1
+
+/* byte swap d1 */
+
     swap    %d1
     move.w  %d1, (%a2)
     swap    %d1
@@ -591,6 +628,7 @@ copy_write_sectors:
     cmp.l   %a0, %a1        /* one word left? */
     bls.b   .w_end_a_w2
 
+/* this has to be byte swaped */
     move.w  (%a0)+, (%a2)   /* copy final word */
 
 .w_end_a_w2:
