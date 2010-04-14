@@ -26,43 +26,33 @@
 #include "thread.h"
 #include "adc.h"
 
+volatile unsigned short adc_data[NUM_ADC_CHANNELS] IBSS_ATTR;
 
-/* blocking delay loop */
-#define DELAY   \
-    ({                                \
-        int _x_;                      \
-        asm volatile (                \
-            "move.l #10000, %[_x_] \r\n" \
-        "1:                     \r\n" \
-            "subq.l #1, %[_x_]  \r\n" \
-            "bhi.b  1b          \r\n" \
-            : [_x_]"=&d"(_x_)         \
-        );                            \
-    })
-
-unsigned short adc_scan(int channel)
+void ADC(void) __attribute__ ((interrupt_handler));
+void ADC(void)
 {
-    int level = disable_irq_save();
+    static unsigned char channel;
+    /* read current value */
+    adc_data[(channel & 0x03)] = ADVALUE;
 
-    /* set source
-     * remark
+    /* switch channel
+     *
+     * set source remark
      * ADCONFIG is 16bit wide so we have to shift data by 16bits left
      * thats why we shift <<24 instead of <<8
      */
 
+    channel++;
+
     and_l(~(3<<24),&ADCONFIG);
     or_l(((channel & 0x03) << 24), &ADCONFIG);
 
-    restore_irq(level);
+}
 
-    /* this is needed as setup time for ADC
-     * otherwise battery readings tend to saturate
-     * and return ~4.6V which is by no means not true.
-     * Buttons scans are not affected which is weird
-     */
-
-    DELAY;
-    return ADVALUE;
+unsigned short adc_scan(int channel)
+{
+    /* maybe we can drop &0x03 part */
+    return adc_data[(channel&0x03)];
 }
 
 void adc_init(void)
@@ -70,6 +60,15 @@ void adc_init(void)
     /* GPIO38 GPIO39 */
     and_l(~((1<<6)|(1<<7)), &GPIO1_FUNCTION);
 
-    /* ADCONFIG taken from OF */
-    ADCONFIG = 0x480;
+    /* ADOUT_SEL = 01
+     * SOURCE SELECT = 000
+     * CLEAR INTERRUPT FLAG
+     * ENABLE INTERRUPT = 1
+     * ADOUT_DRIVE = 00
+     * ADCLK_SEL = 00 (busclk)
+     */
+    ADCONFIG = (1<<10)|(1<<7)|(1<<6);
+
+    /* ADC interrupt level 4.0 */
+    or_l((3<<28), &INTPRI8);
 }

@@ -68,10 +68,10 @@ int button_read_device(void)
 
         /* ADC debouncing: Only accept new reading if it's
          * stable (+/-1). Use latest stable value otherwise. */
-        if ((unsigned)(data - prev_data + 1) <= 2)
-            last_valid = data;
-        prev_data = data;
-        data = last_valid;
+//        if ((unsigned)(data - prev_data + 1) <= 2)
+//            last_valid = data;
+//        prev_data = data;
+//        data = last_valid;
         
         if (data < 2250) // valid button
         {
