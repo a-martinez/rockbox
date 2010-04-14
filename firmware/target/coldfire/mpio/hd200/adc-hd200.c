@@ -65,10 +65,11 @@ void adc_init(void)
      * CLEAR INTERRUPT FLAG
      * ENABLE INTERRUPT = 1
      * ADOUT_DRIVE = 00
-     * ADCLK_SEL = 00 (busclk)
+     * ADCLK_SEL = 011 (busclk/8)
      */
-    ADCONFIG = (1<<10)|(1<<7)|(1<<6);
+
+    ADCONFIG = (1<<10)|(1<<7)|(1<<6)|(1<<1)|(1<<0);
 
     /* ADC interrupt level 4.0 */
-    or_l((3<<28), &INTPRI8);
+    or_l((4<<28), &INTPRI8);
 }

@@ -46,10 +46,13 @@ bool button_hold(void)
 int button_read_device(void)
 {
     int btn = BUTTON_NONE;
-    int data;
+    int data = 0;
     static bool hold_button = false;
-    static int prev_data = 0xff;
-    static int last_valid = 0xff;
+
+    /* for moving average filter */
+    static unsigned short button_filter[4];
+    static unsigned char index;
+
     bool hold_button_old;
 
     /* normal buttons */
@@ -64,15 +67,15 @@ int button_read_device(void)
 
     if (!hold_button)
     {
-        data = adc_scan(ADC_BUTTONS);
 
-        /* ADC debouncing: Only accept new reading if it's
-         * stable (+/-1). Use latest stable value otherwise. */
-//        if ((unsigned)(data - prev_data + 1) <= 2)
-//            last_valid = data;
-//        prev_data = data;
-//        data = last_valid;
+        /* simple moving average filter with 4 item window */
+        button_filter[index&0x03] = adc_scan(ADC_BUTTONS);
+        index++;
         
+        data = (button_filter[0]+button_filter[1] \
+               +button_filter[2]+button_filter[3])>>2;
+
+
         if (data < 2250) // valid button
         {
 	    if (data < 900) /* middle */
