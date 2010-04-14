@@ -28,6 +28,15 @@
 
 volatile unsigned short adc_data[NUM_ADC_CHANNELS] IBSS_ATTR;
 
+/* Reading takes 4096 adclk ticks
+ * We do read one channel at once
+ * 
+ * state      FCPU         Fbus        Fadc      bus/Fadc   Fchannelread
+ * default 11.2896 MHz  5.6448 MHz  5.6448 MHz      2       172.2656 Hz
+ * normal  45.1584 MHz  22.5792 MHz 2.8224 MHz      8       172.2656 Hz
+ * max     124.1856 MHz 62.0928 MHz 1.9404 MHz      32      118.4326 Hz
+ */
+
 void ADC(void) __attribute__ ((interrupt_handler));
 void ADC(void)
 {
