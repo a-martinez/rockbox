@@ -200,12 +200,24 @@ static void set_prescaled_volume(void)
     int prescale = 0;
     int l, r;
 
+<<<<<<< HEAD:firmware/sound.c
 /* The WM codecs listed don't have suitable prescaler functionality, so we let
  * the prescaler stay at 0 for these unless SW tone controls are in use */
 #if defined(HAVE_SW_TONE_CONTROLS) || !(defined(HAVE_WM8975)) \
     || defined(HAVE_WM8711) || defined(HAVE_WM8721) || defined(HAVE_WM8731) \
     || defined(HAVE_WM8750) || defined(HAVE_WM8751) || defined(HAVE_WM8758) \
     || defined(HAVE_WM8985) || defined(HAVE_TSC2100) || defined(HAVE_UDA1341)
+=======
+/* The codecs listed use HW tone controls but don't have suitable prescaler
+ * functionality, so we let the prescaler stay at 0 for these, unless
+ * SW tone controls are in use. This is to avoid needing the SW DSP just for
+ * the prescaling.
+ */
+#if defined(HAVE_SW_TONE_CONTROLS) || !(defined(HAVE_WM8975) \
+    || defined(HAVE_WM8711) || defined(HAVE_WM8721) || defined(HAVE_WM8731) \
+    || defined(HAVE_WM8751) || defined(HAVE_WM8758) || defined(HAVE_WM8985) \
+    || defined(HAVE_UDA1341))
+>>>>>>> 1e17aa5be45402f5c2486cb32d8737ca85aaacf3:firmware/sound.c
 
     prescale = MAX(current_bass, current_treble);
     if (prescale < 0)
