@@ -74,10 +74,9 @@ lcd_write_data:
     lea     LCD_BASE_ADDRESS+2, %a1  /* LCD data port address */
 
 .wd_loop:
-    moveq   #0, %d1      /* clear %d1 */
-    move.b  (%a0)+, %d1  /* load first byte */
-    move.w  %d1, (%a1)   /* transfer */
-    move.b  (%a0)+, %d1  /* load second byte */
+    move.w  (%a0)+, %d1  /* load data */
+    move.w  %d1, (%a1)   /* transfer which is byte actually*/
+    lsr.l   #8, %d1      /* load second byte */
     move.w  %d1, (%a1)   /* transfer */
     subq.l  #1, %d0      /* decrement counter */
     bne     .wd_loop
