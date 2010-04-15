@@ -31,7 +31,7 @@ PLUGIN_HEADER
 #if (CONFIG_STORAGE & STORAGE_MMC)
 #define TEST_SIZE (20*1024*1024)
 #else
-#define TEST_SIZE (300*1024*1024)
+#define TEST_SIZE (20*1024*1024) // hacked
 #endif
 #define TEST_TIME 10 /* in seconds */
 
@@ -120,7 +120,7 @@ static bool test_fs(void)
     log_text(text_buf, true);
 #endif
     log_text("----------------------", true);
-    rb->snprintf(text_buf, sizeof text_buf, "Data size: %dKB", (TEST_SIZE>>10));
+    rb->snprintf(text_buf, sizeof text_buf, "Data size: %ld KB", (TEST_SIZE>>10));
     log_text(text_buf, true);
 
     fd = rb->creat(TEST_FILE);
@@ -137,7 +137,7 @@ static bool test_fs(void)
         current = rb->rand() % (audiobuflen - 4);
         current = MIN(current, total);
         align = rb->rand() & 3;
-        rb->snprintf(text_buf, sizeof text_buf, "Wrt %dKB, %dKB left",
+        rb->snprintf(text_buf, sizeof text_buf, "Wrt %ldKB, %ldKB left",
                      current >> 10, total >> 10);
         log_text(text_buf, false);
 
@@ -166,7 +166,7 @@ static bool test_fs(void)
         current = rb->rand() % (audiobuflen - 4);
         current = MIN(current, total);
         align = rb->rand() & 3;
-        rb->snprintf(text_buf, sizeof text_buf, "Cmp %dKB, %dKB left",
+        rb->snprintf(text_buf, sizeof text_buf, "Cmp %ldKB, %ldKB left",
                      current >> 10, total >> 10);
         log_text(text_buf, false);
 
