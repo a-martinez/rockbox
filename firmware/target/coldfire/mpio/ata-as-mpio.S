@@ -427,8 +427,14 @@ copy_write_sectors:
     lsr.l   #8, %d3
 
 /* low word of %d3 has to be byte swaped */
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d3, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d3        /* d3 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d3         /* d3 = .A.C */
+    or.l    %d7, %d3        /* d3 = BADC */
 
-    move.w  %d3, (%a2)
+   move.w %d3, (%a2)
         
 .w_end_u_w1:
     moveq.l #12, %d0
@@ -445,6 +451,12 @@ copy_write_sectors:
     or.l    %d3, %d2
 
 /* byte swap d2 */
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d2, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d2        /* d2 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d2         /* d2 = .A.C */
+    or.l    %d7, %d2        /* d2 = BADC */
 
     swap    %d2
     move.w  %d2, (%a2)
@@ -466,6 +478,12 @@ copy_write_sectors:
     or.l    %d0, %d2
 
 /* byte swap d2 */
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d2, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d2        /* d2 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d2         /* d2 = .A.C */
+    or.l    %d7, %d2        /* d2 = BADC */
 
     swap    %d2
     move.w  %d2, (%a2)
@@ -477,6 +495,12 @@ copy_write_sectors:
     or.l    %d0, %d3
 
 /* byte swap d3 */
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d3, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d3        /* d3 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d3         /* d3 = .A.C */
+    or.l    %d7, %d3        /* d3 = BADC */
 
     swap    %d3
     move.w  %d3, (%a2)
@@ -488,6 +512,12 @@ copy_write_sectors:
     or.l    %d0, %d4
 
 /* byte swap d4 */
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d4, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d4        /* d4 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d4         /* d4 = .A.C */
+    or.l    %d7, %d4        /* d4 = BADC */
 
     swap    %d4
     move.w  %d4, (%a2)
@@ -499,6 +529,12 @@ copy_write_sectors:
     or.l    %d0, %d5
 
 /* byte swap d5 */
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d5, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d5        /* d5 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d5         /* d5 = .A.C */
+    or.l    %d7, %d5        /* d5 = BADC */
 
     swap    %d5
     move.w  %d5, (%a2)
@@ -520,6 +556,12 @@ copy_write_sectors:
     or.l    %d3, %d2
 
 /* byte swap d2 */
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d2, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d2        /* d2 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d2         /* d2 = .A.C */
+    or.l    %d7, %d2        /* d2 = BADC */
 
     swap    %d2
     move.w  %d2, (%a2)
@@ -538,6 +580,12 @@ copy_write_sectors:
     move.w  (%a0)+, %d2
 
 /* byte swap d2 */
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d2, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d2        /* d2 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d2         /* d2 = .A.C */
+    or.l    %d7, %d2        /* d2 = BADC */
 
     move.l  %d2, %d3
     lsr.l   #8, %d3
@@ -571,6 +619,12 @@ copy_write_sectors:
     move.l  (%a0)+, %d1
 
 /* byte swap d1 */
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d1, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d1        /* d1 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d1         /* d1 = .A.C */
+    or.l    %d7, %d1        /* d1 = BADC */
 
     swap    %d1
     move.w  %d1, (%a2)
@@ -586,6 +640,33 @@ copy_write_sectors:
     movem.l (%a0), %d0-%d3
 
 /* byte swap d0-d3 */
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d0, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d0        /* d0 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d0         /* d0 = .A.C */
+    or.l    %d7, %d0        /* d0 = BADC */
+
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d1, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d1        /* d1 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d1         /* d1 = .A.C */
+    or.l    %d7, %d1        /* d1 = BADC */
+
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d2, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d2        /* d2 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d2         /* d2 = .A.C */
+    or.l    %d7, %d2        /* d2 = BADC */
+
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d3, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d3        /* d3 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d3         /* d3 = .A.C */
+    or.l    %d7, %d3        /* d3 = BADC */
 
     lea.l   (16, %a0), %a0
     swap    %d0
@@ -615,6 +696,12 @@ copy_write_sectors:
     move.l  (%a0)+, %d1
 
 /* byte swap d1 */
+    move.l  %a3, %d7        /* d7 = 0x00FF00FF */
+    and.l   %d1, %d7        /* d7 = .B.D */
+    eor.l   %d7, %d1        /* d1 = A.C. */
+    lsl.l   #8, %d7         /* d7 = B.D. */
+    lsr.l   #8, %d1         /* d1 = .A.C */
+    or.l    %d7, %d1        /* d1 = BADC */
 
     swap    %d1
     move.w  %d1, (%a2)
@@ -629,7 +716,15 @@ copy_write_sectors:
     bls.b   .w_end_a_w2
 
 /* this has to be byte swaped */
-    move.w  (%a0)+, (%a2)   /* copy final word */
+//    move.w  (%a0)+, (%a2)   /* copy final word */
+    move.w (%a0)+, %d0
+    move.l %a3, %d7
+    and.l  %d0, %d7
+    eor.l  %d7, %d0
+    lsl.l  #8, %d7
+    lsr.l  #8, %d0
+    or.l   %d7, %d0
+    move.w %d0, (%a2) 
 
 .w_end_a_w2:
 
