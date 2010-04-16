@@ -39,5 +39,11 @@ void audio_input_mux(int source, unsigned flags)
 {
     (void)source;
     (void)flags;
+
+    switch(source)
+    {
+        case AUDIO_SRC_FMRADIO:
+        break;
+    }
     /* empty stub */
 }
