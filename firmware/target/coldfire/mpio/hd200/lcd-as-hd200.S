@@ -74,26 +74,27 @@ lcd_write_data:
     lea     LCD_BASE_ADDRESS+2, %a1  /* LCD data port address */
 
     btst    #0, %d0    /* longwords multiply? */
-    jeq    .l_write
+    beq    .l_write
 
 .w_write:
-    move.w  (%a0)+, %d1  /* load data */
-    move.w  %d1, (%a1)   /* transfer which is byte actually*/
-    lsr.l   #8, %d1      /* load second byte */
-    move.w  %d1, (%a1)   /* transfer */
-    subq.l  #1, %d0      /* decrement counter */
-    jeq     .write_end   /* single word requested */
+    move.w  (%a0)+, %d1  /* load data         3 cycles*/
+    move.w  %d1, (%a1)   /* first byte        1 cycle*/
+    lsr.l   #8, %d1      /* load second byte  1 cycle*/
+    move.w  %d1, (%a1)   /* transfer          1 cycle*/
+    subq.l  #1, %d0      /* decrement counter 1 cycle*/
+    beq     .write_end   
     
 .l_write:
-    move.l  (%a0)+, %d1  /* load data */
-    move.w  %d1, (%a1)   /* first byte */
-    lsr.l   #8, %d1
-    move.w  %d1, (%a1)   /* second byte */
-    lsr.l   #8, %d1
-    move.w  %d1, (%a1)   /* third byte */
-    lsr.l   #8, %d1
-    move.w  %d1, (%a1)   /* forth byte */
-    subq.l  #2, %d0      /* decrement counter */
+    move.l  (%a0)+, %d1  /* load data         2 cycles*/
+    swap    %d1          /*                   1 cycle */
+    move.w  %d1, (%a1)   /* first byte        1 cycle*/
+    lsr.l   #8, %d1      /*                   1 cycle */
+    move.w  %d1, (%a1)   /* second byte       1 cycle*/
+    lsr.l   #8, %d1      /*                   1 cycle */
+    move.w  %d1, (%a1)   /* third byte        1 cycle*/
+    lsr.l   #8, %d1      /*                   1 cycle */
+    move.w  %d1, (%a1)   /* forth byte        1 cycle*/
+    subq.l  #2, %d0      /* decrement counter 1 cycle*/
     bne     .l_write
 
 .write_end:
