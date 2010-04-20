@@ -379,7 +379,6 @@ copy_read_sectors:
     .global copy_write_sectors
     .type   copy_write_sectors,@function
 
-#if 1    
 /* Write a number of words to the ATA data port
  *
  * Utilises line bursts, assumes there is at least one full line to copy.
@@ -754,3 +753,4 @@ copy_write_sectors:
 
 .w_end:
     .size   copy_write_sectors,.w_end-copy_write_sectors
+
