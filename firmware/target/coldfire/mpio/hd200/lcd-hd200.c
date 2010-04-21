@@ -190,7 +190,7 @@ void lcd_update_rect(int x, int y, int width, int height)
 {
     int ymax;
 
-    if (lcd_initialized)
+    if (!lcd_initialized)
    	return;
  
 
