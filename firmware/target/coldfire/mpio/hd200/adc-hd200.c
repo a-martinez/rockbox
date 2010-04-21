@@ -37,7 +37,7 @@ volatile unsigned short adc_data[NUM_ADC_CHANNELS] IBSS_ATTR;
  * max     124.1856 MHz 62.0928 MHz 1.9404 MHz      32      118.4326 Hz
  */
 
-void ADC(void) __attribute__ ((interrupt_handler));
+void ADC(void) __attribute__ ((interrupt_handler,section(".icode")));
 void ADC(void)
 {
     static unsigned char channel;
