@@ -54,7 +54,7 @@ void ADC(void)
     channel++;
 
     and_l(~(3<<24),&ADCONFIG);
-    or_l(((channel & 0x03) << 24), &ADCONFIG);
+    or_l( (((channel & 0x03) << 8 )|(1<<7))<<16, &ADCONFIG);
 
 }
 
