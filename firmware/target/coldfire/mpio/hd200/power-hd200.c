@@ -31,16 +31,26 @@
 bool tuner_power(bool status)
 {
     (void)status;
-    return true;
+    if (status)
+    {
+        and_l(~(1<<17), &GPIO1_OUT);
+    }
+    else
+    {
+        or_l((1<<17), &GPIO1_OUT);
+    }
+
+    return status;
 }
 #endif /* #if CONFIG_TUNER */
 
 void power_init(void)
 {
     /* GPIO53 has to be high - low resets device */
-    or_l((1<<21), &GPIO1_OUT);
-    or_l((1<<21), &GPIO1_ENABLE);
-    or_l((1<<14)|(1<<21), &GPIO1_FUNCTION);
+    /* GPIO49 is FM related */
+    or_l((1<<21)|(1<<17), &GPIO1_OUT);
+    or_l((1<<21)|(1<<17), &GPIO1_ENABLE);
+    or_l((1<<21)|(1<<17)|(1<<14), &GPIO1_FUNCTION);
 
     and_l(~(1<<15), &GPIO_OUT);
     or_l((1<<15),&GPIO_ENABLE);
