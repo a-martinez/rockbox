@@ -178,7 +178,6 @@ static void draw_progressbar(struct gui_wps *gwps,
     }
 }
 
-bool audio_peek_track(struct mp3entry* id3, int offset);
 static void draw_playlist_viewer_list(struct gui_wps *gwps,
                                       struct playlistviewer *viewer)
 {
@@ -192,14 +191,10 @@ static void draw_playlist_viewer_list(struct gui_wps *gwps,
     int x, length, alignment = WPS_TOKEN_ALIGN_LEFT;
     
     struct mp3entry *pid3;
-#if CONFIG_CODEC == SWCODEC
-    struct mp3entry id3;
-#endif
     char buf[MAX_PATH*2], tempbuf[MAX_PATH];
-    unsigned int buf_used = 0;
     
     gwps->display->set_viewport(viewer->vp);
-    for(i=start_item; (i-start_item)<lines && i<playlist_amount(); i++)
+    for(i=start_item; (i-start_item)<lines && i<=playlist_amount(); i++)
     {
         if (i == cur_playlist_pos)
         {
@@ -210,9 +205,10 @@ static void draw_playlist_viewer_list(struct gui_wps *gwps,
             pid3 = state->nid3;
         }
 #if CONFIG_CODEC == SWCODEC
-        else if ((i>cur_playlist_pos) && audio_peek_track(&id3, i-cur_playlist_pos))
+        else if (i>cur_playlist_pos)
         {
-            pid3 = &id3;
+            if (!audio_peek_track(&pid3, i-cur_playlist_pos))
+                pid3 = NULL;
         }
 #endif
         else
@@ -223,9 +219,9 @@ static void draw_playlist_viewer_list(struct gui_wps *gwps,
         int line = pid3 ? TRACK_HAS_INFO : TRACK_HAS_NO_INFO;
         int j = 0, cur_string = 0;
         char *filename = playlist_peek(i-cur_playlist_pos);
+        unsigned int line_len = 0;
         buf[0] = '\0';
-        buf_used = 0;
-        while (j < viewer->lines[line].count && (buf_used<sizeof(buf)))
+        while (j < viewer->lines[line].count && line_len < sizeof(buf))
         {
             const char *out = NULL;
             token.type = viewer->lines[line].tokens[j];
@@ -234,8 +230,7 @@ static void draw_playlist_viewer_list(struct gui_wps *gwps,
             out = get_id3_token(&token, pid3, tempbuf, sizeof(tempbuf), -1, NULL);
             if (out)
             {
-                snprintf(&buf[buf_used], sizeof(buf)-buf_used, "%s", out);
-                buf_used += strlen(out);
+                line_len = strlcat(buf, out, sizeof(buf));
                 j++;
                 continue;
             }
@@ -270,8 +265,7 @@ static void draw_playlist_viewer_list(struct gui_wps *gwps,
             }
             if (tempbuf[0])
             {
-                snprintf(&buf[buf_used], sizeof(buf)-buf_used, "%s", tempbuf);
-                buf_used += strlen(tempbuf);
+                line_len = strlcat(buf, tempbuf, sizeof(buf));
             }
             j++;
         }
@@ -614,6 +608,12 @@ static bool evaluate_conditional(struct gui_wps *gwps, int *token_index)
         /* clear all pictures in the conditional and nested ones */
         if (data->tokens[i].type == WPS_TOKEN_IMAGE_PRELOAD_DISPLAY)
             clear_image_pos(gwps, find_image(data->tokens[i].value.i&0xFF, data));
+        else if (data->tokens[i].type == WPS_TOKEN_VOLUMEBAR ||
+                 data->tokens[i].type == WPS_TOKEN_PROGRESSBAR)
+        {
+            struct progressbar *bar = (struct progressbar*)data->tokens[i].value.data;
+            bar->draw = false;
+        }
 #endif
 #ifdef HAVE_ALBUMART
         if (data->albumart && data->tokens[i].type == WPS_TOKEN_ALBUMART_DISPLAY)
@@ -676,6 +676,13 @@ static bool get_line(struct gui_wps *gwps,
                 break;
 
 #ifdef HAVE_LCD_BITMAP
+            case WPS_TOKEN_VOLUMEBAR:
+            case WPS_TOKEN_PROGRESSBAR:
+            {
+                struct progressbar *bar = (struct progressbar*)data->tokens[i].value.data;
+                bar->draw = true;
+            }
+            break;
             case WPS_TOKEN_IMAGE_PRELOAD_DISPLAY:
             {
                 char n = data->tokens[i].value.i & 0xFF;
@@ -1261,7 +1268,7 @@ static bool skin_redraw(struct gui_wps *gwps, unsigned refresh_mode)
             while (bar)
             {
                 struct progressbar *thisbar = (struct progressbar*)bar->token->value.data;
-                if (thisbar->vp == &skin_viewport->vp)
+                if (thisbar->vp == &skin_viewport->vp && thisbar->draw)
                 {
                     draw_progressbar(gwps, thisbar);
                 }

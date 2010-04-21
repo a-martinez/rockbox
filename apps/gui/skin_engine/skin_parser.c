@@ -801,6 +801,7 @@ static int parse_playlistview_text(struct playlistviewer *viewer,
                     viewer->lines[line].tokens[viewer->lines[line].count++] = WPS_TOKEN_CHARACTER;
                     viewer->lines[line].strings[cur_string][0] = *text;
                     viewer->lines[line].strings[cur_string++][1] = '\0';
+                    text++;
                     break;
                 default:
                 for (tag = all_tags;
@@ -1157,6 +1158,7 @@ static int parse_progressbar(const char *wps_bufptr,
     pb->have_bitmap_pb = false;
     pb->bm.data = NULL; /* no bitmap specified */
     pb->follow_lang_direction = follow_lang_direction > 0;
+    pb->draw = false;
 
     if (*wps_bufptr != '|') /* regular old style */
     {
@@ -1173,7 +1175,14 @@ static int parse_progressbar(const char *wps_bufptr,
 
     if (!(ptr = parse_list("sdddd", &set, '|', ptr, &filename,
                                                  &x, &y, &width, &height)))
+    {
+        /* if we are in a conditional then we probably don't want to fail
+         * if the above doesnt work. so ASSume the | is breaking the conditional
+         * and move on. the next token will fail if this is incorrect */
+        if (level >= 0)
+            return 0;
         return WPS_ERROR_INVALID_PARAM;
+    }
 
     if (LIST_VALUE_PARSED(set, PB_FILENAME)) /* filename */
         pb->bm.data = (char*)filename;
