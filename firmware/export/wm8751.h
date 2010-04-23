@@ -36,6 +36,20 @@ extern void audiohw_set_lineout_vol(int vol_l, int vol_r);
 #define OUTPUT_MUTED                0x2f
 #define OUTPUT_0DB                  0x79
 
+#if defined(WM8750)
+#define LINVOL                      0x00
+#define LINVOL_LINVOL(x)            ((x) & 0x3f)
+#define LINVOL_LIZC                 (1 << 6)
+#define LINVOL_LINMUTE              (1 << 7)
+#define LINVOL_LIVU                 (1 << 8)
+
+#define RINVOL                      0x01
+#define RINVOL_RINVOL(x)            ((x) & 0x3f)
+#define RINVOL_RIZC                 (1 << 6)
+#define RINVOL_RINMUTE              (1 << 7)
+#define RINVOL_RIVU                 (1 << 8)
+#endif
+
 #define LOUT1                       0x02
 #define LOUT1_LOUT1VOL_MASK         (0x07f << 0)
 #define LOUT1_LOUT1VOL(x)           ((x) & 0x7f)
@@ -136,6 +150,13 @@ extern void audiohw_set_lineout_vol(int vol_l, int vol_r);
 
 #define PWRMGMT1                    0x19
 #define PWRMGMT1_DIGENB             (1 << 0)
+#if defined(WM8750)
+#define PWRMGMT1_MICBIAS            (1 << 1)
+#define PWRMGMT1_ADCR               (1 << 2)
+#define PWRMGMT1_ADCL               (1 << 3)
+#define PWRMGMT1_AINR               (1 << 4)
+#define PWRMGMT1_AINL               (1 << 5)
+#endif
 #define PWRMGMT1_VREF               (1 << 6)
 #define PWRMGMT1_VMIDSEL_DISABLED   (0 << 7)
 #define PWRMGMT1_VMIDSEL_50K        (1 << 7)
@@ -158,7 +179,38 @@ extern void audiohw_set_lineout_vol(int vol_l, int vol_r);
 #define ADDITIONAL3_HPFLREN         (1 << 5)
 #define ADDITIONAL3_VROI            (1 << 6)
 
+#if defined(WM8750)
+#define ADCL                        0x20
+#define ADCL_LMICBOOST_DISABLED     (0 << 4)
+#define ADCL_LMICBOOST_13DB         (1 << 4)
+#define ADCL_LMICBOOST_20DB         (2 << 4)
+#define ADCL_LMICBOOST_29DB         (3 << 4)
+#define ADCL_LMICBOOST(x)           ((x) & (0x3 << 7))
+#define ADCL_LINSEL_LINPUT1         (0 << 6)
+#define ADCL_LINSEL_LINPUT2         (1 << 6)
+#define ADCL_LINSEL_LINPUT3         (2 << 6)
+#define ADCL_LINSEL_DIFF            (3 << 6)         
+
+#define ADCR                        0x21
+#define ADCR_RMICBOOST_DISABLED     (0 << 4)
+#define ADCR_RMICBOOST_13DB         (1 << 4)
+#define ADCR_RMICBOOST_20DB         (2 << 4)
+#define ADCR_RMICBOOST_29DB         (3 << 4)
+#define ADCR_RMICBOOST(x)           ((x) & (0x3 << 7))
+#define ADCR_RINSEL_RINPUT1         (0 << 6)
+#define ADCR_RINSEL_RINPUT2         (1 << 6)
+#define ADCR_RINSEL_RINPUT3         (2 << 6)
+#define ADCR_RINSEL_DIFF            (3 << 6)
+#endif
+
 #define LEFTMIX1                    0x22
+#if defined(WM8750)
+#define LEFTMIX1_LMIXSEL_LINPUT1    (0 << 0)
+#define LEFTMIX1_LMIXSEL_LINPUT2    (1 << 0)
+#define LEFTMIX1_LMIXSEL_LINPUT3    (2 << 0)
+#define LEFTMIX1_LMIXSEL_ADCLIN     (3 << 0)
+#define LEFTMIX1_LMIXSEL_DIFF       (4 << 0)
+#endif
 #define LEFTMIX1_LI2LO_DEFAULT      (5 << 4)
 #define LEFTMIX1_LI2LOVOL(x)        ((x) & (0x7 << 4))
 #define LEFTMIX1_LI2LO              (1 << 7)
@@ -171,6 +223,13 @@ extern void audiohw_set_lineout_vol(int vol_l, int vol_r);
 #define LEFTMIX2_RD2LO              (1 << 8)
 
 #define RIGHTMIX1                   0x24
+#if defined(WM8750)
+#define RIGHTMIX1_RMIXSEL_RINPUT1    (0 << 0)
+#define RIGHTMIX1_RMIXSEL_RINPUT2    (1 << 0)
+#define RIGHTMIX1_RMIXSEL_RINPUT3    (2 << 0)
+#define RIGHTMIX1_RMIXSEL_ADCRIN     (3 << 0)
+#define RIGHTMIX1_RMIXSEL_DIFF       (4 << 0)
+#endif
 #define RIGHTMIX1_MI2RO_DEFAULT     (5 << 4)
 #define RIGHTMIX1_MI2ROVOL(x)       ((x) & (0x7 << 4))
 #define RIGHTMIX1_MI2RO             (1 << 7)
