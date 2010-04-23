@@ -25,12 +25,20 @@
 
 void audio_set_output_source(int source)
 {
+    static const unsigned char txsrc_select[AUDIO_NUM_SOURCES+1] =
+    {
+        [AUDIO_SRC_PLAYBACK+1] = 3, /* PDOR3        */
+        [AUDIO_SRC_MIC+1]      = 4, /* IIS1 RcvData */
+        [AUDIO_SRC_LINEIN+1]   = 4, /* IIS1 RcvData */
+        [AUDIO_SRC_FMRADIO+1]  = 4, /* IIS1 RcvData */
+    };
 
-    (void)source;
     int level = set_irq_level(DMA_IRQ_LEVEL);
 
-    /* PDOR3 */
-    IIS2CONFIG = (IIS2CONFIG & ~(7 << 8)) | (3 << 8);
+    if ((unsigned)source >= AUDIO_NUM_SOURCES)
+        source = AUDIO_SRC_PLAYBACK;
+
+    IIS2CONFIG = (IIS2CONFIG & ~(7 << 8)) | (txsrc_select[source+1] << 8);
 
     restore_irq(level);
 }
