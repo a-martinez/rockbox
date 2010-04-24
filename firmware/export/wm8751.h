@@ -112,7 +112,7 @@ extern void audiohw_set_lineout_vol(int vol_l, int vol_r);
 #define RESET                       0x0f
 #define RESET_RESET                 0x000
 
-/* WM8750 only */
+#if defined(WM8750)
 #define ENHANCE_3D                  0x10
 #define ENHANCE_3D_3DEN             (1 << 0)
 #define ENHANCE_3D_DEPTH(x)         (((x) & 0xf) << 1)
@@ -120,6 +120,30 @@ extern void audiohw_set_lineout_vol(int vol_l, int vol_r);
 #define ENHANCE_3D_3DUC             (1 << 6)
 #define ENHANCE_3D_MODE3D_PLAYBACK  (1 << 7)
 #define ENHANCE_3D_MODE3D_RECORD    (0 << 7)
+
+#define ALC1                        0x11
+#define ALC1_ALCL(x)                ((x) & (0x0f))
+#define ALC1_MAXGAIN(x)             ((x) & (0x07 << 4))
+#define ALC1_ALCSEL_DISABLED        (0 << 7)
+#define ALC1_ALCSEL_RIGHT           (1 << 7)
+#define ALC1_ALCSEL_LEFT            (2 << 7)
+#define ALC1_ALCSEL_STEREO          (3 << 7)
+
+#define ALC2                        0x12
+#define ALC2_HLD(x)                 ((x) & 0x0f)
+#define ALC2_ALCZC                  (1 << 7)
+
+#define ALC3                        0x13
+#define ALC3_ATK(x)                 ((x) & 0x0f)
+#define ALC3_DCY(x)                 ((x) & (0x0f << 4))
+
+#define NGAT                        0x14
+#define NGAT_NGAT                   (1 << 0)
+#define NGAT_NGG_CONST              (0 << 1)
+#define NGAT_NGG_MUTEADC            (1 << 1)
+#define NGAT_NGG(x)                 ((x) & (0x3 << 1))
+#define NGAT_NGTH(x)                ((x) & (0x1f << 3))
+#endif
 
 #define ADDITIONAL1                 0x17
 #define ADDITIONAL1_TOEN            (1 << 0)
@@ -180,6 +204,16 @@ extern void audiohw_set_lineout_vol(int vol_l, int vol_r);
 #define ADDITIONAL3_VROI            (1 << 6)
 
 #if defined(WM8750)
+#define ADCIM                       0x1f
+#define ADCIM_LDCM                  (1 << 4)
+#define ADCIM_RDCM                  (1 << 5)
+#define ADCIM_MONOMIX_STEREO        (0 << 6)
+#define ADCIM_MONOMIX_AMONOL        (1 << 6)
+#define ADCIM_MONOMIX_AMONOR        (2 << 6)
+#define ADCIM_MONOMIX_DMONO         (3 << 6)
+#define ADCIM_MONOMIX(x)            ((x) & (0x3 << 6))
+#define ADCIM_DS                    (1 << 8)
+
 #define ADCL                        0x20
 #define ADCL_LMICBOOST_DISABLED     (0 << 4)
 #define ADCL_LMICBOOST_13DB         (1 << 4)
@@ -219,7 +253,11 @@ extern void audiohw_set_lineout_vol(int vol_l, int vol_r);
 #define LEFTMIX2                    0x23
 #define LEFTMIX2_MI2LO_DEFAULT      (5 << 4)
 #define LEFTMIX2_MI2LOVOL(x)        ((x) & (0x7 << 4))
+#if defined(WM8750)
+#define LEFTMIX2_RI2LO              (1 << 7)
+#elseif defined(WM8751)
 #define LEFTMIX2_MI2LO              (1 << 7)
+#endif
 #define LEFTMIX2_RD2LO              (1 << 8)
 
 #define RIGHTMIX1                   0x24
