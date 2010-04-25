@@ -13,14 +13,11 @@
 #define HAVE_LBA48
 
 /* define this if you have recording possibility */
-/* not implemented yet 
- * #define HAVE_RECORDING
- */
+#define HAVE_RECORDING
 
 
 /* Define bitmask of input sources - recordable bitmask can be defined
  *  explicitly if different
- * not implemented yet
  */
 
 #define INPUT_SRC_CAPS (SRC_CAP_MIC | SRC_CAP_LINEIN | SRC_CAP_FMRADIO)
@@ -29,10 +26,9 @@
 /* define the bitmask of hardware sample rates */
 #define HW_SAMPR_CAPS   (SAMPR_CAP_88 | SAMPR_CAP_44 | SAMPR_CAP_22 | SAMPR_CAP_11)
 
-/* define the bitmask of recording sample rates
- * not implemented yet
- *#define REC_SAMPR_CAPS  (SAMPR_CAP_88 | SAMPR_CAP_44 | SAMPR_CAP_22 | SAMPR_CAP_11)
- */
+/* define the bitmask of recording sample rates */
+#define REC_SAMPR_CAPS  (SAMPR_CAP_88 | SAMPR_CAP_44 | SAMPR_CAP_22 | SAMPR_CAP_11)
+
 
 /* define this if you have a bitmap LCD display */
 #define HAVE_LCD_BITMAP

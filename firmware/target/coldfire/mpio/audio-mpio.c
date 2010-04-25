@@ -23,6 +23,14 @@
 #include "audio.h"
 #include "sound.h"
 
+static inline void enable_mclk(bool enable)
+{
+    if(enable)
+        and_l(~(1<<10), &GPIO1_FUNCTION);
+    else
+        or_l((1<<10), &GPIO1_FUNCTION);
+}
+
 void audio_set_output_source(int source)
 {
     static const unsigned char txsrc_select[AUDIO_NUM_SOURCES+1] =
@@ -45,13 +53,51 @@ void audio_set_output_source(int source)
 
 void audio_input_mux(int source, unsigned flags)
 {
-    (void)source;
-    (void)flags;
+    /* Prevent pops from unneeded switching */
+    static int last_source = AUDIO_SRC_PLAYBACK;
+    bool recording = flags & SRCF_RECORDING;
+    static bool last_recording = false;
 
     switch(source)
     {
-        case AUDIO_SRC_FMRADIO:
+        default:
+            /* playback - no recording */
+            source = AUDIO_SRC_PLAYBACK;
+            break;
+
+        case AUDIO_SRC_PLAYBACK:
+            if (source != last_source)
+            {
+                enable_mclk(true);
+                audiohw_set_inputsrc(source,false);
+                coldfire_set_dataincontrol(0);
+            }
+            break;
+
+        case AUDIO_SRC_MIC:
+        case AUDIO_SRC_LINEIN: 
+            /* recording only */
+            if (source != last_source)
+            {
+                enable_mclk(true);
+                audiohw_set_inputsrc(source,true);
+                /* Int. when 6 samples in FIFO, PDIR2 src = iis1RcvData */
+                coldfire_set_dataincontrol((3 << 14) | (4 << 3));
+            }
         break;
+
+        case AUDIO_SRC_FMRADIO:
+            if (source == last_source && recording == last_recording)
+                break;
+
+            last_recording = recording;
+
+            /* Int. when 6 samples in FIFO, PDIR2 src = iis1RcvData */
+            coldfire_set_dataincontrol(recording ?
+                                       ((3 << 14) | (4 << 3)) : 0);
+
+            enable_mclk(recording);
+            audiohw_set_inputsrc(source, recording);
+            break;
     }
-    /* empty stub */
 }
