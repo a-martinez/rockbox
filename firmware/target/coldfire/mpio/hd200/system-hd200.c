@@ -63,7 +63,7 @@ void cf_set_cpu_frequency(long frequency)
     {
     case CPUFREQ_MAX:
         DCR = (0x8200 | DEFAULT_REFRESH_TIMER);
-              /* Refresh timer for bypass frequency */
+        /* Refresh timer for bypass frequency */
         PLLCR &= ~1;  /* Bypass mode */
         timers_adjust_prescale(CPUFREQ_DEFAULT_MULT, false);
         PLLCR = 0x0102c049 | (PLLCR & 0x70C00000);
@@ -75,17 +75,17 @@ void cf_set_cpu_frequency(long frequency)
         DCR = (0x8200 | MAX_REFRESH_TIMER);          /* Refresh timer */
         cpu_frequency = CPUFREQ_MAX;
         IDECONFIG1 = (1<<28)|(1<<20)|(1<<18)|(1<<13)|(3<<10);
-                    /* BUFEN2 enable on /CS2 | CS2Post 1 clock| CS2Pre 3 clocks*/
+        /* BUFEN2 enable on /CS2 | CS2Post 1 clock| CS2Pre 3 clocks*/
         IDECONFIG2 = (1<<18)|(1<<16)|(1<<8)|(1<<0); /* TA /CS2 enable + CS2wait */
 
-	and_l(~(0x07<<16), &ADCONFIG);
-	or_l(((1<<7)|(1<<2)|(1<<0))<<16, &ADCONFIG); /* adclk = busclk/32 */
+        and_l(~(0x07<<16), &ADCONFIG);
+        or_l(((1<<7)|(1<<2)|(1<<0))<<16, &ADCONFIG); /* adclk = busclk/32 */
 
         break;
 
     case CPUFREQ_NORMAL:
         DCR = (DCR & ~0x01ff) | DEFAULT_REFRESH_TIMER;
-              /* Refresh timer for bypass frequency */
+        /* Refresh timer for bypass frequency */
         PLLCR &= ~1;  /* Bypass mode */
         timers_adjust_prescale(CPUFREQ_DEFAULT_MULT, false);
         PLLCR = 0x05028045 | (PLLCR & 0x70C00000);
@@ -96,16 +96,16 @@ void cf_set_cpu_frequency(long frequency)
         timers_adjust_prescale(CPUFREQ_NORMAL_MULT, true);
         DCR = (0x8000 | NORMAL_REFRESH_TIMER);       /* Refresh timer */
         cpu_frequency = CPUFREQ_NORMAL;
-	IDECONFIG1 = (1<<28)|(1<<20)|(1<<18)|(1<<13)|(1<<10);
-	IDECONFIG2 = (1<<18)|(1<<16);
+        IDECONFIG1 = (1<<28)|(1<<20)|(1<<18)|(1<<13)|(1<<10);
+        IDECONFIG2 = (1<<18)|(1<<16);
 
-	and_l(~(0x07<<16), &ADCONFIG);
-	or_l(((1<<7)|(1<<1)|(1<<0))<<16, &ADCONFIG); /* adclk = busclk/8 */
+        and_l(~(0x07<<16), &ADCONFIG);
+        or_l(((1<<7)|(1<<1)|(1<<0))<<16, &ADCONFIG); /* adclk = busclk/8 */
 
         break;
     default:
         DCR = (DCR & ~0x01ff) | DEFAULT_REFRESH_TIMER;
-              /* Refresh timer for bypass frequency */
+        /* Refresh timer for bypass frequency */
         PLLCR &= ~1;  /* Bypass mode */
         timers_adjust_prescale(CPUFREQ_DEFAULT_MULT, true);
         /* Power down PLL, but keep CLSEL and CRSEL */
@@ -114,11 +114,11 @@ void cf_set_cpu_frequency(long frequency)
         CSCR3 = 0x00000980; /* LCD: 0 wait states */
         DCR = (0x8000 | DEFAULT_REFRESH_TIMER);       /* Refresh timer */
         cpu_frequency = CPUFREQ_DEFAULT;
-	IDECONFIG1 = (1<<28)|(1<<20)|(1<<18)|(1<<13)|(1<<10);
-	IDECONFIG2 = (1<<18)|(1<<16);
+        IDECONFIG1 = (1<<28)|(1<<20)|(1<<18)|(1<<13)|(1<<10);
+        IDECONFIG2 = (1<<18)|(1<<16);
 
-	and_l(~(0x07<<16), &ADCONFIG);
-	or_l(((1<<7)|(1<<0))<<16, &ADCONFIG); /* adclk = busclk/2 */
+        and_l(~(0x07<<16), &ADCONFIG);
+        or_l(((1<<7)|(1<<0))<<16, &ADCONFIG); /* adclk = busclk/2 */
 
         break;
     }
